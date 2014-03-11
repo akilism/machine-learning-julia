@@ -3,7 +3,6 @@
 
 function gradientDescent(X, y, theta, alpha, iterations)
 
-  print_with_color(:green, "Running gradient descent...\n")
   m = length(y)
   jHistory = zeros(iterations, 1)
 

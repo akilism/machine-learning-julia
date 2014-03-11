@@ -5,13 +5,22 @@ include("normalEqn.jl");
 
 function run()
 
-  print_with_color(:blue, "Loading data ...\n")
+  print_with_color(:green, "Loading data ...\n")
   fileStream = open("ex1data2.txt", "r")
   data = readcsv(fileStream)
 
+  print_with_color(:green, "Running gradient descent...\n")
   runGradientDescent(data)
-  runNormalEquations(data)
 
+  print_with_color(:red, "Compute Normal Equations (Y/n): ");
+  runStd = readline()
+
+  if lowercase(runStd) != "n"
+    print_with_color(:green, "\nComputing normal equations...\n")
+    runNormalEquations(data)
+  end
+
+  print_with_color(:green, "Bye!")
 end
 
 
@@ -55,7 +64,18 @@ function runGradientDescent(data)
   # Estimate the price of a 1650 sq-ft, 3 br house
   price = [1, (1650 - mu[1])/sigma[1], (3-mu[2])/sigma[2]]' * theta
   print_with_color(:blue, "Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n")
-  println(price)
+  println(round(price, 2))
+
+  print_with_color(:red, "Square Feet: ");
+  sqft = int(readline())
+
+  print_with_color(:red, "# Bedrooms: ");
+  beds = int(readline())
+
+  price = [1, (sqft - mu[1])/sigma[1], (beds - mu[2])/sigma[2]]' * theta
+  print_with_color(:blue, "Predicted price of a $(sqft) sq-ft, $(beds) br house (using gradient descent):\n")
+  println(round(price, 2))
+  print("\n")
 end
 
 
@@ -74,7 +94,7 @@ function runNormalEquations(data)
   X = [ones(m, 1) X]
 
   # Calculate the parameters from the normal equations
-  theta = normalEqn(X, y);
+  theta = normalEqn(X, y)
 
   # Display normal equation's result
   print_with_color(:blue, "Theta computed from the normal equations: \n")
@@ -85,6 +105,16 @@ function runNormalEquations(data)
   price = [1, 1650, 3]' * theta
 
   print_with_color(:blue, "Predicted price of a 1650 sq-ft, 3 br house (using normal equations):\n")
-  println(price)
+  println(round(price, 2))
 
+  print_with_color(:red, "Square Feet: ");
+  sqft = int(readline())
+
+  print_with_color(:red, "# Bedrooms: ");
+  beds = int(readline())
+
+  price = [1, sqft, beds]' * theta
+  print_with_color(:blue, "Predicted price of a $(sqft) sq-ft, $(beds) br house (using normal equations):\n")
+  println(round(price, 2))
+  print("\n\n")
 end
