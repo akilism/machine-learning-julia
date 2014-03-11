@@ -1,4 +1,5 @@
 # Normalize the features in X.
+
 function featureNormalize(X)
 
   X_norm = X
@@ -6,13 +7,11 @@ function featureNormalize(X)
   sigma = zeros(1, size(X, 2))
   n = size(X, 2)
 
-  for feature = [1:n]
-    # Get mean for each feature (col in matrix)
-    mu[feature] = mean(X[:, feature])
+  # Get mean for each feature (col in matrix)
+  mu = mean(X, 1)
 
-    # Get standard deviation for each feature
-    sigma[feature] = std(X[:, feature])
-  end
+  # Get standard deviation for each feature
+  sigma = std(X, 1)
 
   # Compute the normalized value for each feature
   X_norm = (X .- mu) ./ sigma
