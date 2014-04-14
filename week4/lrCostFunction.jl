@@ -37,7 +37,7 @@ function lrCostFunction(theta, X, y, lambda)
   J = (-(1/m) * sum(results)) + regularization
 
   # Compute a gradient for each x.
-  grad = ((1/m) * sum((predictions -y) .* X)') + reg_grad
+  grad = ((1/m) * sum(((predictions -y) .* X)', 2)) + reg_grad
 
   return J, grad
 end
